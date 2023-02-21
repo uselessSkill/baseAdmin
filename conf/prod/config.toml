@@ -1,0 +1,10 @@
+[debug]
+debug = false
+
+[http]
+listen = "0.0.0.0:10080"
+timeout = 5000
+
+[mysql]
+
+[redis]
