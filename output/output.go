@@ -12,14 +12,19 @@ const (
 	VoidPrams  = 1001 // 无效的参数
 	VoidAge    = 1002 // 无效的年龄
 	TimeOut    = 1003
-	UnKnow     = 9999
+
+	AddAuthorFail = 20001 // 添加权限失败
+	RmAuthorFail  = 20002 // 删除权限失败
+	UnKnow        = 9999
 )
 
 var statusText = map[int]string{
-	Success:    "ok",
-	MissParams: "miss params",
-	UnKnow:     "未知错误",
-	TimeOut:    "访问超时",
+	Success:       "ok",
+	MissParams:    "miss params",
+	UnKnow:        "未知错误",
+	TimeOut:       "访问超时",
+	AddAuthorFail: "添加权限失败",
+	RmAuthorFail:  "删除权限失败",
 }
 
 var DefaultData = make([]int, 0)

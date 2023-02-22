@@ -16,6 +16,7 @@ func Include(opts ...Option) {
 
 func init() {
 	Include(base.NewsRouters)
+	Include(base.RbacRouters)
 }
 
 // 路由注册
