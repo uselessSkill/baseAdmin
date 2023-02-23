@@ -10,7 +10,10 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/go-xorm/xorm v0.7.9 // indirect
+	github.com/gohouse/converter v0.0.3
 	github.com/lib/pq v1.10.7 // indirect
 	github.com/smokezl/govalidators v1.0.2
 	github.com/swaggo/swag v1.8.10
+	gorm.io/driver/mysql v1.4.7
+	gorm.io/gorm v1.24.5
 )

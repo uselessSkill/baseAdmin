@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	config := conf.Init()
 	r := routers.Init()
-	_ = r.Run(config.Http.Listen)
+	_ = r.Run(conf.LoadConfig.Http.Listen)
 }

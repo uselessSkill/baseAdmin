@@ -5,6 +5,11 @@ debug = true
 listen = "0.0.0.0:8081"
 timeout = 1
 
-[mysql]
+[test]
+host = "127.0.0.1"
+port = 3306
+user = "root"
+passwd = "root"
+dbname = "test"
 
 [redis]

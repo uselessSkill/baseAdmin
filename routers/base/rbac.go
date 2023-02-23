@@ -9,13 +9,15 @@ import (
 func RbacRouters(g *gin.Engine) {
 	r := g.Group("/rbac")
 	{
-		// 检测输入类型 参数缺失
-		//r.GET("/init", func(c *gin.Context) {
-		//	rbac.Init()
-		//	c.JSON(http.StatusOK,"success")
-		//})
+		// 添加角色
+		r.GET("/role/add", func(c *gin.Context) {
+			r := c.Query("name")
+			code := rbac.AddRole(r)
+			output.Json(c, code, output.DefaultData)
+		})
+
 		// 添加权限
-		r.GET("/add", func(c *gin.Context) {
+		r.GET("/auth/add", func(c *gin.Context) {
 			var a *rbac.AuthParams
 			if err := c.ShouldBindQuery(&a); err != nil {
 				output.Json(c, output.MissParams, output.DefaultData)
@@ -26,7 +28,7 @@ func RbacRouters(g *gin.Engine) {
 		})
 
 		// 删除权限
-		r.GET("/del", func(c *gin.Context) {
+		r.GET("/auth/del", func(c *gin.Context) {
 			var a *rbac.AuthParams
 			if err := c.ShouldBindQuery(&a); err != nil {
 				output.Json(c, output.MissParams, output.DefaultData)
@@ -36,9 +38,9 @@ func RbacRouters(g *gin.Engine) {
 		})
 
 		// 删除权限
-		r.GET("/get", func(c *gin.Context) {
+		r.GET("/auth/get", func(c *gin.Context) {
 			r := c.Query("role")
-			data := rbac.GetAuth(r)
+			data := rbac.GetRoleAuth(r)
 			output.Json(c, output.Success, data)
 		})
 

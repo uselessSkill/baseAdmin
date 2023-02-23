@@ -1,12 +1,14 @@
 package rbac
 
 import (
+	"baseAdmin/common"
+	"baseAdmin/conf"
+	"baseAdmin/db"
+	"baseAdmin/db/test"
 	"baseAdmin/output"
 	"github.com/casbin/casbin"
 	xd "github.com/casbin/xorm-adapter"
-	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"log"
 	"strings"
 )
 
@@ -15,9 +17,10 @@ var (
 )
 
 func init() {
+	conn := db.FormatDsn(conf.LoadConfig.TestDB)
 	// 使用自己定义rbac_db
 	// 最后的一个参数咱们写true ，否则默认为false,使用缺省的数据库名casbin,不存在则创建
-	a := xd.NewAdapter("mysql", "root:root@tcp(127.0.0.1:3306)/mycasbin?charset=utf8", true)
+	a := xd.NewAdapter("mysql", conn+"?charset=utf8", true)
 	CasEnforcer = casbin.NewEnforcer("./conf/auth_model.conf", a)
 	//从DB中 load 策略
 	_ = CasEnforcer.LoadPolicy()
@@ -26,8 +29,23 @@ func init() {
 
 type AuthParams struct {
 	Auth   string `form:"auth" json:"auth" binding:"required" validate:"string=1,20"`
-	Method string `form:"method" json:"sex" binding:"required" validate:"integer=1,10"`
-	Role   string `form:"role" json:"role" binding:"required" validate:"integer=1,20"`
+	Method string `form:"method" json:"method" binding:"required" validate:"integer=1,10"`
+	Role   string `form:"role" json:"role" binding:"required" validate:"string=1,20"`
+}
+
+// 添加角色
+func AddRole(r string) (code int) {
+	var role test.SysRole
+	test.SysRoleClient.Where("name =?", r).Find(&role)
+
+	if role.Id != 0 {
+		return output.RoleExist
+	}
+
+	role.Name = r
+	role.Ctime = common.GetDateUnix()
+	test.SysRoleClient.Table("sys_role").Create(&role)
+	return output.Success
 }
 
 // 添加权限
@@ -48,25 +66,7 @@ func DelAuth(a *AuthParams) (code int) {
 	return output.Success
 }
 
-func GetAuth(r string) interface{} {
+// 获取角色所属权限
+func GetRoleAuth(r string) interface{} {
 	return CasEnforcer.GetFilteredPolicy(0, r)
-}
-
-// myAuth 拦截器
-func myAuth(e *casbin.Enforcer) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		obj := c.Request.URL.RequestURI()
-		// 获取方法
-		act := c.Request.Method
-		sub := "root"
-
-		// 判断策略是否已经存在了
-		if ok := e.Enforce(sub, obj, act); ok {
-			log.Println("Check successfully")
-			c.Next()
-		} else {
-			log.Println("sorry , Check failed")
-			c.Abort()
-		}
-	}
 }
