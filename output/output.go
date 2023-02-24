@@ -16,9 +16,10 @@ const (
 	AddAuthorFail = 20001 // 添加权限失败
 	RmAuthorFail  = 20002 // 删除权限失败
 
-	AddRoleFail = 20003 //添加角色失败
-	RoleExist   = 20004 //添加角色失败
-	RmRoleFail  = 20005 // 删除角色势失败
+	AddRoleFail  = 20003 //添加角色失败
+	RoleExist    = 20004 //添加角色失败
+	RoleNotExist = 20006 //添加角色失败
+	RmRoleFail   = 20005 // 删除角色势失败
 
 	UnKnow = 9999
 )
@@ -32,6 +33,7 @@ var statusText = map[int]string{
 	RmAuthorFail:  "删除权限失败",
 	AddRoleFail:   "添加角色失败",
 	RoleExist:     "角色已存在",
+	RoleNotExist:  "角色不存在",
 	RmRoleFail:    "删除角色势失败",
 }
 
@@ -45,10 +47,12 @@ type Resp struct {
 
 func Json(c *gin.Context, errno int, data interface{}) {
 	c.JSON(http.StatusOK, FormatNor(errno, data))
+	c.Abort()
 }
 
 func JsonSp(c *gin.Context, resp *Resp) {
 	c.JSON(http.StatusOK, resp)
+	c.Abort()
 }
 
 // 常规输出
