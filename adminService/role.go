@@ -11,7 +11,7 @@ type AdminRole struct {
 }
 
 // 添加角色
-func (rl *AdminRole) AddRole(c *gin.Context) {
+func (rl *AdminRole) Add(c *gin.Context) {
 
 	r := c.Query("name")
 
@@ -30,7 +30,7 @@ func (rl *AdminRole) AddRole(c *gin.Context) {
 }
 
 // 更新角色
-func (rl *AdminRole) UpdRole(c *gin.Context) {
+func (rl *AdminRole) Update(c *gin.Context) {
 
 	var r test.SysRole
 	if err := c.BindQuery(&r); err != nil {
@@ -39,7 +39,6 @@ func (rl *AdminRole) UpdRole(c *gin.Context) {
 	}
 
 	if r := test.GetRole(r.Id, ""); r.Id == 0 {
-
 		output.Json(c, output.RoleNotExist, output.DefaultData)
 		return
 	}

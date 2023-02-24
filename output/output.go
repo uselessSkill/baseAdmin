@@ -13,29 +13,31 @@ const (
 	VoidAge    = 1002 // 无效的年龄
 	TimeOut    = 1003
 
-	AddAuthorFail = 20001 // 添加权限失败
-	RmAuthorFail  = 20002 // 删除权限失败
-	AuthorExist   = 20007 // 权限已存在
-	AddRoleFail   = 20003 //添加角色失败
-	RoleExist     = 20004 //添加角色失败
-	RoleNotExist  = 20006 //添加角色失败
-	RmRoleFail    = 20005 // 删除角色势失败
+	AddAuthorFail  = 20001 // 添加权限失败
+	RmAuthorFail   = 20002 // 删除权限失败
+	AuthorExist    = 20007 // 权限已存在
+	AuthorNotExist = 20008 // 权限已存在
+	AddRoleFail    = 20003 //添加角色失败
+	RoleExist      = 20004 //添加角色失败
+	RoleNotExist   = 20006 //添加角色失败
+	RmRoleFail     = 20005 // 删除角色势失败
 
 	UnKnow = 9999
 )
 
 var statusText = map[int]string{
-	Success:       "ok",
-	MissParams:    "miss params",
-	UnKnow:        "未知错误",
-	TimeOut:       "访问超时",
-	AddAuthorFail: "添加权限失败",
-	RmAuthorFail:  "删除权限失败",
-	AddRoleFail:   "添加角色失败",
-	RoleExist:     "角色已存在",
-	RoleNotExist:  "角色不存在",
-	RmRoleFail:    "删除角色势失败",
-	AuthorExist:   "权限已存在",
+	Success:        "ok",
+	MissParams:     "miss params",
+	UnKnow:         "未知错误",
+	TimeOut:        "访问超时",
+	AddAuthorFail:  "添加权限失败",
+	RmAuthorFail:   "删除权限失败",
+	AddRoleFail:    "添加角色失败",
+	RoleExist:      "角色已存在",
+	RoleNotExist:   "角色不存在",
+	RmRoleFail:     "删除角色势失败",
+	AuthorExist:    "权限已存在",
+	AuthorNotExist: "权限不存在",
 }
 
 var DefaultData = make([]int, 0)
