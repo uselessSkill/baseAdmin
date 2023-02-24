@@ -15,11 +15,11 @@ const (
 
 	AddAuthorFail = 20001 // 添加权限失败
 	RmAuthorFail  = 20002 // 删除权限失败
-
-	AddRoleFail  = 20003 //添加角色失败
-	RoleExist    = 20004 //添加角色失败
-	RoleNotExist = 20006 //添加角色失败
-	RmRoleFail   = 20005 // 删除角色势失败
+	AuthorExist   = 20007 // 权限已存在
+	AddRoleFail   = 20003 //添加角色失败
+	RoleExist     = 20004 //添加角色失败
+	RoleNotExist  = 20006 //添加角色失败
+	RmRoleFail    = 20005 // 删除角色势失败
 
 	UnKnow = 9999
 )
@@ -35,6 +35,7 @@ var statusText = map[int]string{
 	RoleExist:     "角色已存在",
 	RoleNotExist:  "角色不存在",
 	RmRoleFail:    "删除角色势失败",
+	AuthorExist:   "权限已存在",
 }
 
 var DefaultData = make([]int, 0)

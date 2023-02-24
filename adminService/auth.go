@@ -1,34 +1,28 @@
 package adminService
 
 import (
-	"baseAdmin/conf"
-	"baseAdmin/db"
+	"baseAdmin/common"
+	"baseAdmin/db/test"
 	"baseAdmin/output"
+	"github.com/gin-gonic/gin"
 )
 
-type AuthParams struct {
-	Auth   string `form:"auth" json:"auth" binding:"required" validate:"string=1,20"`
-	Method string `form:"method" json:"method" binding:"required" validate:"integer=1,10"`
-	Role   string `form:"role" json:"role" binding:"required" validate:"string=1,20"`
-}
-
 // 添加权限
-func AddAuth(a *AuthParams) (code int) {
+func AddAuth(c *gin.Context) {
 
-	db.CreateMysqlTableSheetStruct(conf.LoadConfig.TestDB, "sys_auth")
+	var a test.SysRole
+	if err := c.ShouldBindQuery(&a); err != nil {
+		output.Json(c, output.MissParams, output.DefaultData)
+		return
+	}
 
-	//a.Method = strings.ToUpper(a.Method)
-	//if ok := rbac.CasEnforcer.AddPolicy(a.Role, a.Auth, a.Method); !ok {
-	//	return output.AddAuthorFail
-	//}
-	return output.Success
-}
+	if h := test.GetAuth(0, a.Name); h.Id != 0 {
+		output.Json(c, output.AuthorExist, output.DefaultData)
+		return
+	}
 
-// 删除权限
-func DelAuth(a *AuthParams) (code int) {
-	//a.Method = strings.ToUpper(a.Method)
-	//if ok := rbac.CasEnforcer.RemovePolicy(a.Role, a.Auth, a.Method); !ok {
-	//	return output.RmAuthorFail
-	//}
-	return output.Success
+	a.Ctime = common.GetDateUnix()
+	a.Utime = common.GetDateUnix()
+	test.SysRoleClient().Create(&a)
+
 }

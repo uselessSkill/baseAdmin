@@ -4,13 +4,17 @@ import (
 	"baseAdmin/common"
 	"baseAdmin/db/test"
 	"baseAdmin/output"
+	"github.com/gin-gonic/gin"
 )
 
 // 添加角色
-func AddRole(r string) (code int) {
+func AddRole(c *gin.Context) {
+
+	r := c.Query("name")
 
 	if r := test.GetRole(0, r); r.Id != 0 {
-		return output.RoleExist
+		output.Json(c, output.RoleExist, output.DefaultData)
+		return
 	}
 
 	var role test.SysRole
@@ -19,19 +23,29 @@ func AddRole(r string) (code int) {
 	role.Status = 1
 	role.Name = r
 	test.SysRoleClient().Create(&role)
-	return output.Success
+	output.Json(c, output.Success, output.DefaultData)
 }
 
 // 更新角色
-func UpdRole(r *test.SysRole) int {
+func UpdRole(c *gin.Context) {
+
+	var r test.SysRole
+	if err := c.ShouldBindQuery(&r); err != nil {
+		output.Json(c, output.MissParams, output.DefaultData)
+		return
+	}
+
 	if r := test.GetRole(r.Id, ""); r.Id == 0 {
-		return output.RoleNotExist
+
+		output.Json(c, output.RoleNotExist, output.DefaultData)
+		return
 	}
 
 	if r := test.GetRole(0, r.Name); r.Id != 0 {
-		return output.RoleExist
+		output.Json(c, output.RoleExist, output.DefaultData)
+		return
 	}
 
 	test.SysRoleClient().Model(&r).Where("id = ?", r.Id).Updates(&r)
-	return output.Success
+	output.Json(c, output.Success, output.DefaultData)
 }

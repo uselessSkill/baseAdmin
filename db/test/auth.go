@@ -20,3 +20,16 @@ type SysAuth struct {
 func SysAuthClient() *gorm.DB {
 	return db.MysqlTestClient.Table("sys_auth")
 }
+
+func GetAuth(rId int, r string) *SysAuth {
+	var auth *SysAuth
+	if r != "" {
+		SysAuthClient().Where("name =?", r).Find(&auth)
+	}
+
+	if rId != 0 {
+		SysAuthClient().Where("id =?", rId).Find(&auth)
+	}
+
+	return auth
+}
