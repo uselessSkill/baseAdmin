@@ -7,8 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type AdminRole struct {
+}
+
 // 添加角色
-func AddRole(c *gin.Context) {
+func (rl *AdminRole) AddRole(c *gin.Context) {
 
 	r := c.Query("name")
 
@@ -27,10 +30,10 @@ func AddRole(c *gin.Context) {
 }
 
 // 更新角色
-func UpdRole(c *gin.Context) {
+func (rl *AdminRole) UpdRole(c *gin.Context) {
 
 	var r test.SysRole
-	if err := c.ShouldBindQuery(&r); err != nil {
+	if err := c.BindQuery(&r); err != nil {
 		output.Json(c, output.MissParams, output.DefaultData)
 		return
 	}

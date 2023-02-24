@@ -7,11 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type AdminAuth struct {
+}
+
 // 添加权限
-func AddAuth(c *gin.Context) {
+func (ah *AdminAuth) AddAuth(c *gin.Context) {
 
 	var a test.SysRole
-	if err := c.ShouldBindQuery(&a); err != nil {
+	if err := c.BindQuery(&a); err != nil {
 		output.Json(c, output.MissParams, output.DefaultData)
 		return
 	}
@@ -24,5 +27,9 @@ func AddAuth(c *gin.Context) {
 	a.Ctime = common.GetDateUnix()
 	a.Utime = common.GetDateUnix()
 	test.SysRoleClient().Create(&a)
+
+}
+
+func (ah *AdminAuth) UpdAuth() {
 
 }
