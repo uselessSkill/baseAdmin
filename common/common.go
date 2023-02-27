@@ -1,6 +1,7 @@
 package common
 
 import (
+	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,4 +27,18 @@ func GetCurrPath() string {
 	index := strings.LastIndex(path, string(os.PathSeparator))
 	ret := path[:index]
 	return ret
+}
+
+var CHARS = []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
+
+func RandAllString(lenNum int) string {
+	str := strings.Builder{}
+	length := len(CHARS)
+	for i := 0; i < lenNum; i++ {
+		l := CHARS[rand.Intn(length)]
+		str.WriteString(l)
+	}
+	return str.String()
 }
