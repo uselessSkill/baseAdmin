@@ -1,8 +1,8 @@
-package adminService
+package controller
 
 import (
 	"baseAdmin/common"
-	"baseAdmin/db/test"
+	"baseAdmin/model/test"
 	"baseAdmin/output"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -12,7 +12,7 @@ type AdminUser struct {
 }
 
 // 添加
-func (*AdminUser) Add(c *gin.Context) {
+func (au *AdminUser) Add(c *gin.Context) {
 	var u test.SysAdmin
 	if err := c.BindQuery(&u); err != nil {
 		output.Json(c, output.MissParams, output.DefaultData)
@@ -33,7 +33,7 @@ func (*AdminUser) Add(c *gin.Context) {
 }
 
 // 更新
-func (*AdminUser) Update(c *gin.Context) {
+func (au *AdminUser) Update(c *gin.Context) {
 	var u test.SysAdmin
 	updPwd, _ := strconv.Atoi(c.Query("updPwd"))
 
@@ -70,7 +70,7 @@ func (*AdminUser) Update(c *gin.Context) {
 }
 
 // 禁止
-func (*AdminUser) Forbid(c *gin.Context) {
+func (au *AdminUser) Forbid(c *gin.Context) {
 	adminId, _ := c.GetQuery("admin_id")
 
 	var admin test.SysAdmin
@@ -80,4 +80,15 @@ func (*AdminUser) Forbid(c *gin.Context) {
 
 	test.SysAdminClient().Where("id =?", adminId).Updates(&admin)
 	output.Json(c, output.Success, output.DefaultData)
+}
+
+// bind Role
+// 根据操作习惯 创建用户时候，绑定用户
+func (au *AdminUser) bindRole(c *gin.Context, rId int) bool {
+
+	if has := test.GetRole(rId, ""); has.Id < 0 {
+		output.Json(c, output.RoleNotExist, output.DefaultData)
+	}
+
+	return false
 }

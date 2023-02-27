@@ -1,4 +1,4 @@
-package adminService
+package controller
 
 type AllService struct {
 	AdminRole

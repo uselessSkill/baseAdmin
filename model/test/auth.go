@@ -19,7 +19,7 @@ type SysAuth struct {
 }
 
 func SysAuthClient() *gorm.DB {
-	return db.MysqlTestClient.Table("sys_auth")
+	return model.MysqlTestClient.Table("sys_auth")
 }
 
 func GetAuth(rId int, r string) *SysAuth {

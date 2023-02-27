@@ -6,7 +6,7 @@ import (
 )
 
 func RbacRouters(g *gin.Engine) {
-	admin := new(adminService.AllService)
+	admin := new(controller.AllService)
 	r := g.Group("/rbac")
 	{
 		r.GET("/role/add", admin.AdminRole.Add)        // 添加角色

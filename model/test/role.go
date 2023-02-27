@@ -15,7 +15,7 @@ type SysRole struct {
 }
 
 func SysRoleClient() *gorm.DB {
-	return db.MysqlTestClient.Table("sys_role")
+	return model.MysqlTestClient.Table("sys_role")
 }
 
 func GetRole(rId int, r string) *SysRole {

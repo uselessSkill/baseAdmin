@@ -22,7 +22,7 @@ type SysAdmin struct {
 }
 
 func SysAdminClient() *gorm.DB {
-	return db.MysqlTestClient.Table("sys_admin")
+	return model.MysqlTestClient.Table("sys_admin")
 }
 
 func GetAdmin(rId int, r string) *SysAdmin {

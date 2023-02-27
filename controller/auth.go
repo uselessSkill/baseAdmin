@@ -1,8 +1,8 @@
-package adminService
+package controller
 
 import (
 	"baseAdmin/common"
-	"baseAdmin/db/test"
+	"baseAdmin/model/test"
 	"baseAdmin/output"
 	"github.com/gin-gonic/gin"
 	"strconv"
