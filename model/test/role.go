@@ -1,7 +1,7 @@
 package test
 
 import (
-	"baseAdmin/db"
+	"baseAdmin/model"
 	"errors"
 	"gorm.io/gorm"
 )

@@ -22,8 +22,9 @@ const (
 	RoleNotExist   = 20006 // 添加角色失败
 	RmRoleFail     = 20005 // 删除角色势失败
 	AdminExist     = 20009 // 该用户已存在
-
-	UnKnow = 9999
+	AdminNotExist  = 20010 // 该用户不存在
+	AuthErrorType  = 20011 // 错误的权限参数
+	UnKnow         = 9999
 )
 
 var statusText = map[int]string{
@@ -40,6 +41,8 @@ var statusText = map[int]string{
 	AuthorExist:    "权限已存在",
 	AuthorNotExist: "权限不存在",
 	AdminExist:     "该用户已存在",
+	AdminNotExist:  "该用户不存在",
+	AuthErrorType:  "错误的权限参数",
 }
 
 var DefaultData = make([]int, 0)

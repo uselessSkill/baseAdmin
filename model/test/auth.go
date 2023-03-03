@@ -1,7 +1,7 @@
 package test
 
 import (
-	"baseAdmin/db"
+	"baseAdmin/model"
 	"gorm.io/gorm"
 )
 
@@ -15,6 +15,7 @@ type SysAuth struct {
 	Utime    string `gorm:"utime" json:"utime" form:"utime"`
 	Remark   string `gorm:"remark" json:"remark" form:"remark"`
 	JumpPath string `gorm:"jump_path" json:"jump_path" form:"jump_path"`
+	MenuType int    `gorm:"menu_type" json:"menu_type" form:"menu_type"`
 	Sort     int    `gorm:"sort" json:"sort" form:"sort"`
 }
 

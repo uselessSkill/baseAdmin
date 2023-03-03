@@ -2,7 +2,7 @@ package test
 
 import (
 	"baseAdmin/common"
-	"baseAdmin/db"
+	"baseAdmin/model"
 	"crypto/md5"
 	"encoding/hex"
 	"gorm.io/gorm"
